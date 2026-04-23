@@ -1,22 +1,15 @@
-import React from "react";
 import QUSTIONS from "../question";
+import { useQuizContext } from "../context/QuizContext";
+import QuestionTimer from "./QuestionTimer";
 
-function Question({
-  activeQuesIndex,
-  handleAnswerSelection,
-}: {
-  activeQuesIndex: number;
-  handleAnswerSelection: (ans: {
-    question: string;
-    text: string | null;
-    status: string;
-  }) => void;
-}) {
-  const shuffledAnswers = [...QUSTIONS[activeQuesIndex].answers];
+function Question() {
+  const { handleAnswerSelection, question } = useQuizContext();
+  const shuffledAnswers = [...question.answers];
   shuffledAnswers.sort(() => Math.random() - 0.5);
   return (
     <>
-      <h2>{QUSTIONS[activeQuesIndex].text}</h2>
+      <QuestionTimer key={question.id} />
+      <h2>{question.text}</h2>
       <ul id="answers">
         {shuffledAnswers.map((ans) => {
           return (
@@ -24,7 +17,7 @@ function Question({
               <button
                 onClick={() => {
                   handleAnswerSelection({
-                    question: QUSTIONS[activeQuesIndex].text,
+                    question: question.text,
                     ...ans,
                   });
                 }}

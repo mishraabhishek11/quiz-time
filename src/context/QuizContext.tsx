@@ -3,8 +3,13 @@ import QUSTIONS from "../question";
 
 export const QuizContext = React.createContext({
   skippedTimeOut: 10000 as number,
-  activeQuesIndex: 0 as number,
+  isQuizComplete: false as boolean,
   answers: [] as { question: string; text: string | null; status: string }[],
+  question: {} as {
+    id: string;
+    text: string;
+    answers: { text: string; status: string }[];
+  },
   handleAnswerSelection: (ans: {
     question: string;
     text: string | null;
@@ -50,7 +55,8 @@ export const QuizContextProvider = ({
     <QuizContext.Provider
       value={{
         skippedTimeOut: 10000,
-        activeQuesIndex,
+        isQuizComplete: activeQuesIndex === QUSTIONS.length,
+        question: QUSTIONS[activeQuesIndex],
         answers,
         handleAnswerSelection,
         handleTimedOutAnswer,

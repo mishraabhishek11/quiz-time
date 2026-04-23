@@ -1,15 +1,9 @@
-import React from "react";
 import award from "../assets/quiz-complete.png";
+import { useQuizContext } from "../context/QuizContext";
 
-function Summary({
-  answers,
-}: {
-  answers: {
-    question: string;
-    text: string | null;
-    status: string;
-  }[];
-}) {
+function Summary() {
+  const { answers } = useQuizContext();
+
   const skipped = answers.filter((a) => a.text === null).length;
   const correctAnswers = answers.filter((a) => a.status === "correct").length;
   const skippedShare = Math.round((skipped / answers.length) * 100);

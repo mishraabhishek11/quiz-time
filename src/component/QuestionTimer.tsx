@@ -1,23 +1,19 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useQuizContext } from "../context/QuizContext";
 
-function QuestionTimer({
-  timeout,
-  onTimeout,
-}: {
-  timeout: number;
-  onTimeout: () => void;
-}) {
-  const [remaining, setRemaining] = useState(timeout);
+function QuestionTimer() {
+  const { skippedTimeOut, handleTimedOutAnswer } = useQuizContext();
+  const [remaining, setRemaining] = useState(skippedTimeOut);
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      onTimeout();
-    }, timeout);
+      handleTimedOutAnswer();
+    }, skippedTimeOut);
 
     return () => {
       clearTimeout(timer);
     };
-  }, [timeout, onTimeout]);
+  }, [skippedTimeOut, handleTimedOutAnswer]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -30,8 +26,8 @@ function QuestionTimer({
   }, []);
 
   return (
-    <div>
-      <progress id="question-time" max={timeout} value={remaining} />
+    <div id="question">
+      <progress id="question-time" max={skippedTimeOut} value={remaining} />
     </div>
   );
 }
