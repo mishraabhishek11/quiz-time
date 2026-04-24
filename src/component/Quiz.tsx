@@ -4,7 +4,7 @@ import Question from "./Question";
 import { useQuizContext } from "../context/QuizContext";
 
 function Quiz() {
-  const { isQuizComplete, question } = useQuizContext();
+  const { isQuizComplete } = useQuizContext();
 
   if (isQuizComplete) {
     return <Summary />;

@@ -2,13 +2,13 @@ import award from "../assets/quiz-complete.png";
 import { useQuizContext } from "../context/QuizContext";
 
 function Summary() {
-  const { answers } = useQuizContext();
+  const { answered } = useQuizContext();
 
-  const skipped = answers.filter((a) => a.text === null).length;
-  const correctAnswers = answers.filter((a) => a.status === "correct").length;
-  const skippedShare = Math.round((skipped / answers.length) * 100);
+  const skipped = answered.filter((a) => a.text === null).length;
+  const correctAnswers = answered.filter((a) => a.status === "correct").length;
+  const skippedShare = Math.round((skipped / answered.length) * 100);
   const correctAnswersShare = Math.round(
-    (correctAnswers / answers.length) * 100,
+    (correctAnswers / answered.length) * 100,
   );
   return (
     <div id="summary">
@@ -31,7 +31,7 @@ function Summary() {
         </p>
       </div>
       <ol>
-        {answers.map((ans, index) => {
+        {answered.map((ans, index) => {
           return (
             <li key={ans.question}>
               <h3>{index + 1}</h3>

@@ -4,8 +4,8 @@ import QUSTIONS from "../question";
 export const QuizContext = React.createContext({
   skippedTimeOut: 10000 as number,
   isQuizComplete: false as boolean,
-  answers: [] as { question: string; text: string | null; status: string }[],
-  question: {} as {
+  answered: [] as { question: string; text: string | null; status: string }[],
+  activeQuestion: {} as {
     id: string;
     text: string;
     answers: { text: string; status: string }[];
@@ -27,18 +27,18 @@ export const QuizContextProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [answers, setAnswers] = useState<
+  const [answered, setAnswered] = useState<
     { question: string; text: string | null; status: string }[]
   >([]);
 
-  const activeQuesIndex = answers.length;
+  const activeQuesIndex = answered.length;
 
   const handleAnswerSelection = (ans: {
     question: string;
     text: string | null;
     status: string;
   }) => {
-    setAnswers((prev) => {
+    setAnswered((prev) => {
       return [...prev, ans];
     });
   };
@@ -56,8 +56,8 @@ export const QuizContextProvider = ({
       value={{
         skippedTimeOut: 10000,
         isQuizComplete: activeQuesIndex === QUSTIONS.length,
-        question: QUSTIONS[activeQuesIndex],
-        answers,
+        activeQuestion: QUSTIONS[activeQuesIndex],
+        answered,
         handleAnswerSelection,
         handleTimedOutAnswer,
       }}

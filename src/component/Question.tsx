@@ -3,13 +3,13 @@ import { useQuizContext } from "../context/QuizContext";
 import QuestionTimer from "./QuestionTimer";
 
 function Question() {
-  const { handleAnswerSelection, question } = useQuizContext();
-  const shuffledAnswers = [...question.answers];
+  const { handleAnswerSelection, activeQuestion } = useQuizContext();
+  const shuffledAnswers = [...activeQuestion.answers];
   shuffledAnswers.sort(() => Math.random() - 0.5);
   return (
     <>
-      <QuestionTimer key={question.id} />
-      <h2>{question.text}</h2>
+      <QuestionTimer key={activeQuestion.id} />
+      <h2>{activeQuestion.text}</h2>
       <ul id="answers">
         {shuffledAnswers.map((ans) => {
           return (
@@ -17,7 +17,7 @@ function Question() {
               <button
                 onClick={() => {
                   handleAnswerSelection({
-                    question: question.text,
+                    question: activeQuestion.text,
                     ...ans,
                   });
                 }}
